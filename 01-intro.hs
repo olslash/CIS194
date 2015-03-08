@@ -21,3 +21,13 @@ sumDigits (x:xs) = sumDigits (toDigits x) + (sumDigits xs)
 validate :: Integer -> Bool
 validate n = ((`rem` 10) . sumDigits . doubleEveryOther . toDigits) n == 0
 
+
+--------------------------------------------------
+
+type Peg = String
+type Move = (Peg, Peg)
+
+hanoi :: Integer -> Peg -> Peg -> Peg -> [Move]
+hanoi numDiscs fromPeg helpPeg toPeg
+  | numDiscs == 1 = [(fromPeg, toPeg)]
+  | otherwise = hanoi (numDiscs - 1) fromPeg toPeg helpPeg  ++ [(fromPeg, toPeg)] ++ hanoi (numDiscs - 1) helpPeg fromPeg toPeg
