@@ -1,5 +1,4 @@
 {-# OPTIONS_GHC -Wall #-}
-
 module Lists02
 ( Move(..), Code, Peg ) where
 
@@ -43,4 +42,25 @@ getMove secret guess = Move guess exact nonexact
 -- look into Move and compare its 2nd and 3rd args against getMove Code (move's code)
 isConsistent :: Move -> Code -> Bool
 isConsistent compare@(Move code _ _) maybeSecret = getMove maybeSecret code  == compare
+
+filterCodes :: Move -> [Code] -> [Code]
+filterCodes move codes = filter (isConsistent move) codes
+
+codesPlusOne :: [Code] -> [Code]
+codesPlusOne (code:codes) = [concatMap (\x -> [x]) colors]
+
+-- add the first element of colors to the first element 
+-- [[red], [green], [blue]]
+-- [[red, red], [red, green], [red, blue], 
+-- [green red], [green green], [green blue], 
+-- [blue red], [blue green], [blue blue]]
+
+
+-- takes in all the codes of length n − 1 and uses it to produce all codes of length n
+-- adds each color to the end of the input, adding that to the output
+
+
+-- allCodes :: Int -> [Code]
+-- allCodes 0 = []
+-- allCodes n = : allCodes n - 1
 

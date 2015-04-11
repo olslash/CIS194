@@ -1,3 +1,6 @@
+{-# OPTIONS_GHC -Wall #-}
+module HW01 where
+
 toDigits :: Integer -> [Integer]
 toDigits n
   | n <= 0    = []
