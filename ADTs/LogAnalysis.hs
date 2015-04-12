@@ -44,3 +44,10 @@ build = foldr insert Leaf
 inOrder :: MessageTree -> [LogMessage]
 inOrder (Node l root r) = inOrder l ++ [root] ++ inOrder r
 inOrder Leaf = []
+
+whatWentWrong :: [LogMessage] -> [String]
+whatWentWrong (LogMessage (Error s) _ msg : ls)
+    | s > 50 = msg : whatWentWrong ls
+    | otherwise = whatWentWrong ls
+whatWentWrong (x:xs) = whatWentWrong xs
+whatWentWrong [] = []
