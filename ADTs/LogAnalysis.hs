@@ -39,7 +39,7 @@ insert msg@(LogMessage _ _ _) Leaf = Node Leaf msg Leaf
 insert _ tree = tree
 
 build :: [LogMessage] -> MessageTree
-build logs = foldl (flip insert) Leaf logs
+build = foldr insert Leaf
 
 inOrder :: MessageTree -> [LogMessage]
 inOrder (Node l root r) = inOrder l ++ [root] ++ inOrder r
