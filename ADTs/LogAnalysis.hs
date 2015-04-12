@@ -39,4 +39,4 @@ insert msg@(LogMessage _ _ _) Leaf = Node Leaf msg Leaf
 insert _ tree = tree
 
 build :: [LogMessage] -> MessageTree
-build logs = foldl (\acc l -> insert l acc) Leaf logs
+build logs = foldl (flip insert) Leaf logs
