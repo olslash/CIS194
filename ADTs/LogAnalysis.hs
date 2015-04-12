@@ -3,6 +3,9 @@ module ADTs.LogAnalysis where
 
 import Log
 
+parse :: String -> [LogMessage]
+parse input = map parseMessage (lines input)
+
 parseMessage :: String -> LogMessage
 parseMessage s = parse' $ words s
     where parse' (w:ws) = case w of "I" -> parseInfo ws
@@ -10,9 +13,6 @@ parseMessage s = parse' $ words s
                                     "E" -> parseError ws
                                     _  -> Unknown "Unknown prefix"
           parse' [] = Unknown "Empty log message"
-
-parse :: String -> [LogMessage]
-parse input = map parseMessage (lines input)
 
 parseInfo :: [String] -> LogMessage
 parseInfo (time:msg) = LogMessage Info (read time :: TimeStamp) (unwords msg)
@@ -38,3 +38,5 @@ insert msg@(LogMessage _ newTime _) tree@(Node l logmsg@(LogMessage _ nodeTime _
 insert msg@(LogMessage _ _ _) Leaf = Node Leaf msg Leaf
 insert _ tree = tree
 
+build :: [LogMessage] -> MessageTree
+build logs = foldl (\acc l -> insert l acc) Leaf logs
